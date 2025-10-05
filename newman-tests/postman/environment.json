@@ -1,0 +1,51 @@
+{
+  "id": "pandac-pos-environment",
+  "name": "Pandac POS Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "enabled": true
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "admin_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTk2NDIxNjQsInN1YiI6IjUxOGJkZWU1LTA3YzEtNGFlNC05OWE2LTE3ZWIyMDcwNjE3ZCJ9.w0ydVoENxWfdqMFmILmEC8QjMgZ5dAH-Tqjggaph6YY",
+      "enabled": true
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "product_id",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "customer_id",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "sale_id",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "employee_id",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "enabled": true
+    }
+  ]
+}

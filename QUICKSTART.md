@@ -42,6 +42,12 @@ docker-compose down
 - **Analytics**: Sales reports and business insights
 - **Testing Suite**: Comprehensive API test coverage
 
+## Additional Guides
+
+- 📖 **[Database Migrations Guide](ALEMBIC_GUIDE.md)** - Complete Alembic usage instructions
+- 📋 **[Detailed Setup](SETUP.md)** - Manual installation and configuration
+- 📊 **[Project Study Guide](PROJECT_STUDY_GUIDE.md)** - Architecture and implementation details
+
 ## File Structure (Clean)
 
 ```text

@@ -98,3 +98,14 @@ cp .env.example .env
 - **Zero Failures**: Complete success on all authentication and CRUD operations
 
 The API has been thoroughly validated and is production-ready with 100% test success rate.
+
+## Database Migrations
+
+The project uses Alembic for database schema management:
+
+- **Migration Management**: Track and apply database schema changes
+- **Auto-generation**: Generate migrations from SQLAlchemy model changes  
+- **Version Control**: Rollback and upgrade database versions
+- **Production Ready**: Safe migration practices for all environments
+
+📖 **[Complete Alembic Guide](ALEMBIC_GUIDE.md)** - Detailed instructions for database migrations

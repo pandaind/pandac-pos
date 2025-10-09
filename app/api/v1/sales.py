@@ -1,6 +1,7 @@
 from typing import List, Optional
 from datetime import datetime, timedelta
 from uuid import UUID
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session, joinedload
 
@@ -12,6 +13,8 @@ from app.schemas.pos import (
     Sale, SaleCreate, SaleUpdate, SaleItem, SaleItemCreate,
     Payment, PaymentCreate, Discount
 )
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -80,7 +83,7 @@ def create_sale(
             "updated_at": sale.updated_at.isoformat()
         }
     except Exception as e:
-        print(f"Error creating sale: {str(e)}")
+        logger.error(f"Error creating sale: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error creating sale: {str(e)}")
 
 

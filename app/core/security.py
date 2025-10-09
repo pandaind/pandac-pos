@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta
 from typing import Any, Optional, Union
+import logging
 
 from jose import JWTError, jwt
 import bcrypt
 
 from app.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 def create_access_token(
@@ -44,7 +47,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         password_bytes = plain_password.encode('utf-8')[:72]
         return bcrypt.checkpw(password_bytes, hashed_password.encode('utf-8'))
     except Exception as e:
-        print(f"Password verification error: {e}")
+        logger.error(f"Password verification error: {e}")
         return False
 
 

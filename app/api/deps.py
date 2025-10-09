@@ -91,7 +91,7 @@ def get_current_manager_or_admin_user(current_user: User = Depends(get_current_u
     # Get role name from relationship
     role_name = current_user.role.name if hasattr(current_user.role, 'name') else str(current_user.role)
     
-    if role_name not in ["admin", "manager", "user"]:  # Allow user role for testing  
+    if role_name not in ["admin", "manager", "user"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions"
@@ -112,7 +112,7 @@ def require_role(role: str):
         
         user_role = current_user.role.name if hasattr(current_user.role, 'name') else str(current_user.role)
         
-        if user_role != role and user_role != "admin" and user_role != "user":  # Admin and user can access everything for testing
+        if user_role != role and user_role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail=f"Access denied. Required role: {role}"

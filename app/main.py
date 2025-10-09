@@ -40,42 +40,8 @@ def init_db():
             crud_role.create(db, obj_in=cashier_role)
             logger.info("Created cashier role")
         
-        # Create some basic test products if none exist
-        existing_products = product_crud.get_multi(db, limit=1)
-        if not existing_products:
-            test_products = [
-                ProductCreate(
-                    name="Test Product 1",
-                    description="Basic test product for API testing",
-                    unit_price=10.99,
-                    stock_quantity=100,
-                    category="Test Category",
-                    sku="TEST001"
-                ),
-                ProductCreate(
-                    name="Test Product 2", 
-                    description="Another test product",
-                    unit_price=25.50,
-                    stock_quantity=50,
-                    category="Test Category",
-                    sku="TEST002"
-                ),
-                ProductCreate(
-                    name="Test Product 3",
-                    description="Third test product",
-                    unit_price=5.99,
-                    stock_quantity=200,
-                    category="Test Category",
-                    sku="TEST003"
-                )
-            ]
-            
-            for product_data in test_products:
-                try:
-                    product_crud.create(db, obj_in=product_data)
-                    logger.info(f"Created test product: {product_data.name}")
-                except Exception as e:
-                    logger.warning(f"Could not create test product {product_data.name}: {e}")
+        # Database initialization complete
+        logger.info("Database initialization completed successfully")
             
     except Exception as e:
         logger.error(f"Error initializing database: {e}")

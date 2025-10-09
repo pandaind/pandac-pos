@@ -1,6 +1,7 @@
 from typing import Optional, List
 from datetime import datetime, timedelta
 from uuid import UUID
+import logging
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func
 
@@ -13,6 +14,8 @@ from app.schemas.pos import (
 )
 from app.schemas.misc import DiscountCreate, DiscountUpdate
 
+logger = logging.getLogger(__name__)
+
 
 class CRUDPOSSale(CRUDBase[POSSale, SaleCreate, SaleUpdate]):
     def create_with_user(self, db: Session, *, obj_in: SaleCreate, user_id: UUID) -> POSSale:
@@ -20,12 +23,12 @@ class CRUDPOSSale(CRUDBase[POSSale, SaleCreate, SaleUpdate]):
         try:
             # Extract items from the sale data
             items_data = obj_in.items
-            print(f"Creating sale with cashier_id: {obj_in.cashier_id}")
+            logger.info(f"Creating sale with cashier_id: {obj_in.cashier_id}")
             
             # Find or create employee for the cashier
             employee = db.query(Employee).filter(Employee.user_id == obj_in.cashier_id).first()
             if not employee:
-                print(f"Employee not found for user_id: {obj_in.cashier_id}, creating new employee")
+                logger.info(f"Employee not found for user_id: {obj_in.cashier_id}, creating new employee")
                 # Create employee if it doesn't exist
                 employee = Employee(
                     user_id=obj_in.cashier_id,
@@ -35,9 +38,9 @@ class CRUDPOSSale(CRUDBase[POSSale, SaleCreate, SaleUpdate]):
                 db.add(employee)
                 db.flush()  # Ensure employee ID is generated
                 db.refresh(employee)  # Refresh to get the ID
-                print(f"Created employee with ID: {employee.id}")
+                logger.info(f"Created employee with ID: {employee.id}")
             else:
-                print(f"Found existing employee with ID: {employee.id}")
+                logger.info(f"Found existing employee with ID: {employee.id}")
             
             # Create the sale with only the fields that POSSale model accepts
             db_sale = POSSale(
@@ -48,22 +51,22 @@ class CRUDPOSSale(CRUDBase[POSSale, SaleCreate, SaleUpdate]):
             )
             db.add(db_sale)
             db.flush()  # Get the sale ID
-            print(f"Created sale with ID: {db_sale.id}")
+            logger.info(f"Created sale with ID: {db_sale.id}")
             
             # Create sale items
             for item_data in items_data:
                 item_dict = item_data.model_dump(exclude={'discount_amount'})
-                print(f"Creating sale item: {item_dict}")
+                logger.debug(f"Creating sale item: {item_dict}")
                 db_item = POSSaleItem(sale_id=db_sale.id, **item_dict)
                 db.add(db_item)
             
             db.commit()
             db.refresh(db_sale)
-            print(f"Successfully created sale: {db_sale.id}")
+            logger.info(f"Successfully created sale: {db_sale.id}")
             return db_sale
         except Exception as e:
             db.rollback()
-            print(f"Error in create_with_user: {str(e)}")
+            logger.error(f"Error in create_with_user: {str(e)}")
             raise e
     
     def get_by_customer(self, db: Session, *, customer_id: UUID) -> List[POSSale]:
